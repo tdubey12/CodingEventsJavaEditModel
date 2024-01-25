@@ -1,9 +1,9 @@
 package org.launchcode.codingevents.models;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -25,11 +25,56 @@ public class Event {
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
+    @NotBlank(message="Location cannot be left blank.")
+    private String location;
+
+    @Positive(message="Number of attendees must be one or more.")
+    private int numberOfAttendees;
+
+    @AssertTrue(message="you must register for the event.")
+    private boolean register;
+
+    @Future(message="Enter future date.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date eventDate;
+
+    public boolean isRegister() {
+        return register;
+    }
+
+    public void setRegister(boolean register) {
+        this.register = register;
+    }
+
+    public Date getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
+    }
+
     public Event(String name, String description, String contactEmail) {
         this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getNumberOfAttendees() {
+        return numberOfAttendees;
+    }
+
+    public void setNumberOfAttendees(int numberOfAttendees) {
+        this.numberOfAttendees = numberOfAttendees;
     }
 
     public Event() {
